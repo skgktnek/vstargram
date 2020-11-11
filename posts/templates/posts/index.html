@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'posts/style.css'%}" />
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Posts</h1>
+        {% if posts %}
+        
+        <table class="table">
+            <thead class="thead-dark">
+            
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">본문</th>
+                    <th scope="col">게시일</th>
+                    <th scope="col">상세</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <th>{{ post.id }}</th>
+                    <td>{{ post.user.get_username }}</td>
+                    <td>{{ post.body }}</td>
+                    <td>{{ post.created_at }}</td>
+                    <td><a href="/posts/{{ post.id }}">보기</a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+          <P>No Posts.</P>
+        {% endif %}
+        <a href="{% url 'posts:new' %}">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary">글쓰기</button>
+            </div>
+        </a>
+    </div>
+{% endblock %}
